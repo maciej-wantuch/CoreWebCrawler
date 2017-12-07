@@ -18,7 +18,7 @@ namespace ConsoleApplicationCrawler
         {
             int pageCount = (int)GetPageCount();
 
-            for (int p = 1; p < pageCount; p++)
+            for (int p = 1; p <= pageCount; p++)
             {
                 HtmlDocument doc = new HtmlDocument();
                 doc.LoadHtml(GetPage(p));
@@ -31,7 +31,6 @@ namespace ConsoleApplicationCrawler
                 int pCp = productCollection.Count;
 
                 string productName = string.Empty;
-                //string productPrice = string.Empty;
                 double productPrice;
                 string productDiscount = string.Empty;
 
