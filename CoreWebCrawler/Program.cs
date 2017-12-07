@@ -17,7 +17,7 @@ namespace ConsoleApplicationCrawler
 
             Stream streamResponse = myWebResponse.GetResponseStream();
 
-            StreamReader sreader = new StreamReader(streamResponse ?? throw new ArgumentNullException($"404 Poor Man"));
+            StreamReader sreader = new StreamReader(streamResponse ?? throw new ArgumentNullException($"404"));
             String rstring = sreader.ReadToEnd();
 
             var products = Spider.GetContent(rstring);

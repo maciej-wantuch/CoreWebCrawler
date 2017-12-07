@@ -34,7 +34,6 @@ namespace ConsoleApplicationCrawler
 
             } while (pCp > 0);
 
-            SQLiteConnection.CreateFile("lol.sqlite");
 
             SQLiteConnection lol_dbConnection;
 
