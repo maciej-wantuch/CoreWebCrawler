@@ -2,6 +2,7 @@
 using System.Data.SQLite;
 using System.Linq;
 using HtmlAgilityPack;
+using Microsoft.Data.Sqlite;
 
 namespace ConsoleApplicationCrawler
 {
@@ -34,37 +35,6 @@ namespace ConsoleApplicationCrawler
 
             } while (pCp > 0);
 
-
-            SQLiteConnection lol_dbConnection;
-
-            lol_dbConnection = new SQLiteConnection("Data Source=lol.sqlite;Version=3;");
-            lol_dbConnection.Open();
-
-            String sql = "CREATE TABLE zonk (name VARCHAR(20), score INT)";
-            SQLiteCommand command = new SQLiteCommand(sql, lol_dbConnection);
-
-            sql = "insert into highscores (name, score) values ('Me', 3000)";
-            command = new SQLiteCommand(sql, lol_dbConnection);
-            command.ExecuteNonQuery();
-            sql = "insert into highscores (name, score) values ('Myself', 6000)";
-            command = new SQLiteCommand(sql, lol_dbConnection);
-            command.ExecuteNonQuery();
-            sql = "insert into highscores (name, score) values ('And I', 9001)";
-            command = new SQLiteCommand(sql, lol_dbConnection);
-            command.ExecuteNonQuery();
-
-            sql = "select * from highscores order by score desc";
-            command = new SQLiteCommand(sql, lol_dbConnection);
-
-            SQLiteDataReader reader = command.ExecuteReader();
-
-            sql = "select * from highscores order by score desc";
-            command = new SQLiteCommand(sql, lol_dbConnection);
-            reader = command.ExecuteReader();
-            while (reader.Read())
-                Console.WriteLine("Name: " + reader["name"] + "\tScore: " + reader["score"]);
-
-            return array;
         }
 
     }
