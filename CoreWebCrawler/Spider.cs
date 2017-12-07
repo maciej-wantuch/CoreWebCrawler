@@ -16,29 +16,36 @@ namespace ConsoleApplicationCrawler
 
         public static void GetContent()
         {
-            HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(GetPage(1)); //TODO: Update code for auto pagination and getting element at page
+            int pageCount = (int)GetPageCount();
 
-            HtmlNodeCollection productCollection = doc.DocumentNode.SelectNodes("//td[contains(@class, 'product_box')]");
-            IEnumerable<HtmlNode> productNameCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//li[contains(@class, 'product_name')]"));
-            IEnumerable<HtmlNode> productPriceCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//li[contains(@class, 'product_price')]/text()[contains(., 'JPY')]"));
-            IEnumerable<HtmlNode> productDiscountCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//span[contains(@class, 'product_off')]"));
+            for (int p = 1; p < pageCount; p++)
+            {
+                HtmlDocument doc = new HtmlDocument();
+                doc.LoadHtml(GetPage(p));
 
-            int pCp = productCollection.Count;
+                HtmlNodeCollection productCollection = doc.DocumentNode.SelectNodes("//td[contains(@class, 'product_box')]");
+                IEnumerable<HtmlNode> productNameCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//li[contains(@class, 'product_name')]"));
+                IEnumerable<HtmlNode> productPriceCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//li[contains(@class, 'product_price')]/text()[contains(., 'JPY')]"));
+                IEnumerable<HtmlNode> productDiscountCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//span[contains(@class, 'product_off')]"));
 
-            string productName = string.Empty;
-            string productPrice = string.Empty;
-            string productDiscount = string.Empty;
+                int pCp = productCollection.Count;
 
-            for (int i = 0; i < pCp; i++){
-                
-                productName = productNameCollection.ElementAt(i) != null ? productNameCollection.ElementAt(i).InnerText : string.Empty;
-                productPrice = productPriceCollection.ElementAt(i) != null ? Regex.Replace(productPriceCollection.ElementAt(i).InnerText, @"\s", "") : string.Empty;
-                productDiscount = productDiscountCollection.ElementAt(i) != null ? productDiscountCollection.ElementAt(i).InnerText : string.Empty;
+                string productName = string.Empty;
+                string productPrice = string.Empty;
+                string productDiscount = string.Empty;
+
+                for (int i = 0; i < pCp; i++)
+                {
+
+                    productName = productNameCollection.ElementAt(i) != null ? productNameCollection.ElementAt(i).InnerText : string.Empty;
+                    productPrice = productPriceCollection.ElementAt(i) != null ? Regex.Replace(productPriceCollection.ElementAt(i).InnerText, @"\s", "") : string.Empty;
+                    productDiscount = productDiscountCollection.ElementAt(i) != null ? productDiscountCollection.ElementAt(i).InnerText : string.Empty;
 
 
-                DataBaseUtils.DBwrite(productName, productPrice, productDiscount);
+                    DataBaseUtils.DBwrite(productName, productPrice, productDiscount);
+                }
             }
+
         }
 
         static string GetPage(int page)

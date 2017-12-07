@@ -11,7 +11,7 @@ namespace CoreWebCrawler
         public static void DBinitalize()
         {
 
-            dbConnection = new SqliteConnection("Data Source=db.sqlite;Version=3;");
+            dbConnection = new SqliteConnection("Data Source=db.sqlite;");
 
             dbConnection.Open();
 
@@ -49,7 +49,7 @@ namespace CoreWebCrawler
             SqliteDataReader reader = command.ExecuteReader();
 
             while (reader.Read())
-                Console.WriteLine(string.Format("Name: {0, -300} Price: {1, -60} Discount: {2, -60}", reader["productName"], reader["productPrice"], reader["productDiscount"]));
+                Console.WriteLine(string.Format("Name: {0, -200} Price: {1, -15} Discount: {2, -15}", reader["productName"], reader["productPrice"], reader["productDiscount"]));
 
             dbConnection.Close();
         }
