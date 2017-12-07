@@ -49,7 +49,7 @@ namespace CoreWebCrawler
             SqliteDataReader reader = command.ExecuteReader();
 
             while (reader.Read())
-                Console.WriteLine(string.Format("Name: {0, -200} Price: {1, -15} Discount: {2, -15}", reader["productName"], reader["productPrice"], reader["productDiscount"]));
+                Console.WriteLine(string.Format("Name: {0, -230} Price: {1, -15} Discount: {2, -15}", reader["productName"], reader["productPrice"], reader["productDiscount"]));
 
             dbConnection.Close();
         }
