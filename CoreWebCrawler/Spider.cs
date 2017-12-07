@@ -28,13 +28,13 @@ namespace ConsoleApplicationCrawler
                 IEnumerable<HtmlNode> productPriceCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//li[contains(@class, 'product_price')]/text()[contains(., 'JPY')]"));
                 IEnumerable<HtmlNode> productDiscountCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//span[contains(@class, 'product_off')]"));
 
-                int pCp = productCollection.Count;
+                int productsCount = productCollection.Count;
 
                 string productName = string.Empty;
                 double productPrice;
                 string productDiscount = string.Empty;
 
-                for (int i = 0; i < pCp; i++)
+                for (int i = 0; i < productsCount; i++)
                 {
 
                     productName = productNameCollection.ElementAt(i) != null ? productNameCollection.ElementAt(i).InnerText : string.Empty;
