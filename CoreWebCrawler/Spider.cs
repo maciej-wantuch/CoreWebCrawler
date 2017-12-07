@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
 using CoreWebCrawler;
 using HtmlAgilityPack;
 
@@ -7,36 +11,57 @@ namespace ConsoleApplicationCrawler
 {
     public class Spider
     {
-        public static void GetContent(string Rstring)
+        static readonly string url = "http://slist.amiami.com/top/search/list3?s_condition_flg=1&s_sortkey=preowned&pagemax=50&getcnt=0&pagecnt=";
+        static readonly double maxItemsOnPage = 50;
+
+        public static void GetContent()
         {
-            var doc = new HtmlDocument();
-            doc.LoadHtml(Rstring);
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(GetPage(1)); //TODO: Update code for auto pagination and getting element at page
 
             HtmlNodeCollection productCollection = doc.DocumentNode.SelectNodes("//td[contains(@class, 'product_box')]");
-            var productNameCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//li[contains(@class, 'product_name')]"));
-            var productPriceCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//li[contains(@class, 'product_price')]"));
-            var productDiscountCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//span[contains(@class, 'product_off')]"));
+            IEnumerable<HtmlNode> productNameCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//li[contains(@class, 'product_name')]"));
+            IEnumerable<HtmlNode> productPriceCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//li[contains(@class, 'product_price')]/text()[contains(., 'JPY')]"));
+            IEnumerable<HtmlNode> productDiscountCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//span[contains(@class, 'product_off')]"));
 
             int pCp = productCollection.Count;
-            
+
+            string productName = string.Empty;
+            string productPrice = string.Empty;
+            string productDiscount = string.Empty;
 
             for (int i = 0; i < pCp; i++){
-                DataBaseUtils.DBwrite();
-            }
+                
+                productName = productNameCollection.ElementAt(i) != null ? productNameCollection.ElementAt(i).InnerText : string.Empty;
+                productPrice = productPriceCollection.ElementAt(i) != null ? Regex.Replace(productPriceCollection.ElementAt(i).InnerText, @"\s", "") : string.Empty;
+                productDiscount = productDiscountCollection.ElementAt(i) != null ? productDiscountCollection.ElementAt(i).InnerText : string.Empty;
 
+
+                DataBaseUtils.DBwrite(productName, productPrice, productDiscount);
+            }
         }
 
-    }
+        static string GetPage(int page)
+        {
+            WebRequest myWebRequest;
+            WebResponse myWebResponse;
 
-    public class trinkets
-    {
-        public String pName { get; set; }
-        public String pPrice { get; set; }
-        public String pRelease { get; set; }
+            myWebRequest = WebRequest.Create(url + page);
+            myWebResponse = myWebRequest.GetResponse();
+
+            Stream streamResponse = myWebResponse.GetResponseStream();
+
+            StreamReader sreader = new StreamReader(streamResponse ?? throw new ArgumentNullException($"404"));
+            return sreader.ReadToEnd();
+        }
+
+        static double GetPageCount()
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(GetPage(1));
+
+            double itemCount = double.Parse(doc.DocumentNode.SelectSingleNode(".//p[contains(text(), 'items')]").InnerText.Remove(4));
+            return Math.Ceiling(itemCount/maxItemsOnPage);
+        }
     }
 }
-
-//prodOffCollection.ElementAt(i) != null ? prodOffCollection.ElementAt(i).InnerText : string.Empty;
-
-//float itemCount = float.Parse(doc.DocumentNode.SelectSingleNode(".//p[contains(text(), 'items')]").InnerText.Remove(4));
-            //return (float) Math.Ceiling(itemCount/maxItemsOnPage);

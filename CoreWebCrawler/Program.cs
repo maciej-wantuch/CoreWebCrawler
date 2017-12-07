@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Net;
+﻿using CoreWebCrawler;
 
 namespace ConsoleApplicationCrawler
 {
@@ -8,21 +6,14 @@ namespace ConsoleApplicationCrawler
     {
         static void Main()
         {
-            WebRequest myWebRequest;
-            WebResponse myWebResponse;
-            String URL = "http://slist.amiami.com/top/search/list3?s_condition_flg=1&s_sortkey=preowned&pagemax=50";
 
-            myWebRequest = WebRequest.Create(URL);
-            myWebResponse = myWebRequest.GetResponse();
+            DataBaseUtils.DBinitalize();
 
-            Stream streamResponse = myWebResponse.GetResponseStream();
+            Spider.GetContent();
 
-            StreamReader sreader = new StreamReader(streamResponse ?? throw new ArgumentNullException($"404"));
-            String rstring = sreader.ReadToEnd();
+            DataBaseUtils.DBread();
 
-            Spider.GetContent(rstring);
-
-
+            DataBaseUtils.DBdelete();
 
         }
 
