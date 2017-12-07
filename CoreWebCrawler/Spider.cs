@@ -9,7 +9,7 @@ using HtmlAgilityPack;
 
 namespace ConsoleApplicationCrawler
 {
-    public class Spider
+    public static class Spider
     {
         static readonly string url = "http://slist.amiami.com/top/search/list3?s_condition_flg=1&s_sortkey=preowned&pagemax=50&getcnt=0&pagecnt=";
         static readonly double maxItemsOnPage = 50;

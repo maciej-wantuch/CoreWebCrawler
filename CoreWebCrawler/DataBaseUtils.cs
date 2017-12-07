@@ -4,7 +4,7 @@ using Microsoft.Data.Sqlite;
 
 namespace CoreWebCrawler
 {
-    public class DataBaseUtils
+    public static class DataBaseUtils
     {
         static SqliteConnection dbConnection;
 
