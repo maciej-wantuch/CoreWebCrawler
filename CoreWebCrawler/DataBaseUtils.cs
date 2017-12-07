@@ -8,7 +8,7 @@ namespace CoreWebCrawler
     {
         static SqliteConnection dbConnection;
 
-        static void DBinitalize(){
+        public static void DBinitalize(){
 
             dbConnection = new SqliteConnection("Data Source=db.sqlite;Version=3;");
 
@@ -21,7 +21,7 @@ namespace CoreWebCrawler
             dbConnection.Close();
         }
 
-        static void DBwrite(string productName, string productPrice, string productDiscount){
+        public static void DBwrite(string productName, string productPrice, string productDiscount){
 
             dbConnection.Open();
 
@@ -36,7 +36,7 @@ namespace CoreWebCrawler
             dbConnection.Close();
         }
 
-        static void DBread(){
+        public static void DBread(){
 
             dbConnection.Open();
 
@@ -51,7 +51,7 @@ namespace CoreWebCrawler
             dbConnection.Close();
         }
 
-        static void DBdelete(){
+        public static void DBdelete(){
             File.Delete("db.sqlite");
         }
     }

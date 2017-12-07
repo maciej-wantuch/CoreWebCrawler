@@ -20,13 +20,9 @@ namespace ConsoleApplicationCrawler
             StreamReader sreader = new StreamReader(streamResponse ?? throw new ArgumentNullException($"404"));
             String rstring = sreader.ReadToEnd();
 
-            var products = Spider.GetContent(rstring);
+            Spider.GetContent(rstring);
 
 
-            foreach (var product in products)
-            {
-                Console.WriteLine(product.pName);
-            }
 
         }
 
