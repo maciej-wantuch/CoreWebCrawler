@@ -31,14 +31,15 @@ namespace ConsoleApplicationCrawler
                 int pCp = productCollection.Count;
 
                 string productName = string.Empty;
-                string productPrice = string.Empty;
+                //string productPrice = string.Empty;
+                double productPrice;
                 string productDiscount = string.Empty;
 
                 for (int i = 0; i < pCp; i++)
                 {
 
                     productName = productNameCollection.ElementAt(i) != null ? productNameCollection.ElementAt(i).InnerText : string.Empty;
-                    productPrice = productPriceCollection.ElementAt(i) != null ? Regex.Replace(productPriceCollection.ElementAt(i).InnerText, @"\s", "") : string.Empty;
+                    productPrice = productPriceCollection.ElementAt(i) != null ? double.Parse(Regex.Replace(productPriceCollection.ElementAt(i).InnerText, @"\s|[^0-9,]", "")) : 0;
                     productDiscount = productDiscountCollection.ElementAt(i) != null ? productDiscountCollection.ElementAt(i).InnerText : string.Empty;
 
 

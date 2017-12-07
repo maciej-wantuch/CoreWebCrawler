@@ -13,6 +13,10 @@ namespace ConsoleApplicationCrawler
 
             DataBaseUtils.DBread();
 
+            DataBaseUtils.DBreadAscending();
+
+            DataBaseUtils.DBreadDescending();
+
             DataBaseUtils.DBdelete();
 
         }
