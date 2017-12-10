@@ -38,7 +38,7 @@ namespace ConsoleApplicationCrawler
                 {
 
                     productName = productNameCollection.ElementAt(i) != null ? productNameCollection.ElementAt(i).InnerText : string.Empty;
-                    productPrice = productPriceCollection.ElementAt(i) != null ? double.Parse(Regex.Replace(productPriceCollection.ElementAt(i).InnerText, @"\s|[^0-9,]", "")) : 0;
+                    productPrice = productPriceCollection.ElementAt(i) != null ? double.Parse(Regex.Replace(productPriceCollection.ElementAt(i).InnerText, @"\s|[^0-9,]", string.Empty)) : 0;
                     productDiscount = productDiscountCollection.ElementAt(i) != null ? productDiscountCollection.ElementAt(i).InnerText : string.Empty;
 
 

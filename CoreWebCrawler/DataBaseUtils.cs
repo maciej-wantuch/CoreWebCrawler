@@ -88,5 +88,10 @@ namespace CoreWebCrawler
         {
             File.Delete("db.sqlite");
         }
+
+        public static void LinqTestQuery()
+        {
+            
+        }
     }
 }
