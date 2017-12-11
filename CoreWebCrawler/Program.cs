@@ -11,11 +11,13 @@ namespace ConsoleApplicationCrawler
 
             Spider.GetContent();
 
-            DataBaseUtils.DBread();
+            DataBaseUtils.DBreadBunnies();
 
-            DataBaseUtils.DBreadAscending();
+            //DataBaseUtils.DBread();
 
-            DataBaseUtils.DBreadDescending();
+            //DataBaseUtils.DBreadAscending();
+
+            //DataBaseUtils.DBreadDescending();
 
             DataBaseUtils.DBdelete();
 

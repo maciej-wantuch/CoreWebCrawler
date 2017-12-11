@@ -54,6 +54,22 @@ namespace CoreWebCrawler
             dbConnection.Close();
         }
 
+        public static void DBreadBunnies()
+        {
+
+            dbConnection.Open();
+
+            string sql = "select * from trinkets where productName like '%Bunny%' order by productPrice desc";
+
+            SqliteCommand command = new SqliteCommand(sql, dbConnection);
+            SqliteDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+                Console.WriteLine(string.Format("Name: {0, -230} Price: JPY {1, -15:N} Discount: {2, -15}", reader["productName"], reader["productPrice"], reader["productDiscount"]));
+
+            dbConnection.Close();
+        }
+
         public static void DBreadAscending()
         {
             dbConnection.Open();
@@ -91,7 +107,10 @@ namespace CoreWebCrawler
 
         public static void LinqTestQuery()
         {
-            
+            using (var db = new TrinketsCollectionContext())
+            {
+                //db
+            }
         }
     }
 }
