@@ -6,22 +6,11 @@ namespace ConsoleApplicationCrawler
     {
         static void Main()
         {
-
-            //DataBaseUtils.DBinitalize();
-
-            DataBaseUtils.LinquSeedQuery();
+            DataBaseUtils.SeedDataBase();
 
             Spider.GetContent();
 
-            DataBaseUtils.LinqReadQuery();
-
-            //DataBaseUtils.DBreadBunnies();
-
-            //DataBaseUtils.DBread();
-
-            //DataBaseUtils.DBreadAscending();
-
-            //DataBaseUtils.DBreadDescending();
+            DataBaseUtils.ReadFromDataBase();
 
             //DataBaseUtils.DBdelete();
 

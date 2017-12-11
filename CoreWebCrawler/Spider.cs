@@ -41,9 +41,7 @@ namespace ConsoleApplicationCrawler
                     productPrice = productPriceCollection.ElementAt(i) != null ? double.Parse(Regex.Replace(productPriceCollection.ElementAt(i).InnerText, @"\s|[^0-9,]", string.Empty)) : 0;
                     productDiscount = productDiscountCollection.ElementAt(i) != null ? productDiscountCollection.ElementAt(i).InnerText : string.Empty;
 
-
-                    //DataBaseUtils.DBwrite(productName, productPrice, productDiscount);
-                    DataBaseUtils.LinqWriteQuery(productName, productPrice, productDiscount);
+                    DataBaseUtils.WriteToDataBase(productName, productPrice, productDiscount);
                 }
             }
 

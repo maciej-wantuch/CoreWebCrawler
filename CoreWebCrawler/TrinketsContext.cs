@@ -2,7 +2,7 @@
 
 namespace CoreWebCrawler
 {
-    public class TrinketsCollectionContext : DbContext
+    public class TrinketsContext : DbContext
     {
         public DbSet<Trinket> Trinkets { get; set; }
 
