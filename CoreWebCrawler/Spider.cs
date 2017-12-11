@@ -42,7 +42,8 @@ namespace ConsoleApplicationCrawler
                     productDiscount = productDiscountCollection.ElementAt(i) != null ? productDiscountCollection.ElementAt(i).InnerText : string.Empty;
 
 
-                    DataBaseUtils.DBwrite(productName, productPrice, productDiscount);
+                    //DataBaseUtils.DBwrite(productName, productPrice, productDiscount);
+                    DataBaseUtils.LinqWriteQuery(productName, productPrice, productDiscount);
                 }
             }
 

@@ -7,11 +7,15 @@ namespace ConsoleApplicationCrawler
         static void Main()
         {
 
-            DataBaseUtils.DBinitalize();
+            //DataBaseUtils.DBinitalize();
+
+            DataBaseUtils.LinquSeedQuery();
 
             Spider.GetContent();
 
-            DataBaseUtils.DBreadBunnies();
+            DataBaseUtils.LinqReadQuery();
+
+            //DataBaseUtils.DBreadBunnies();
 
             //DataBaseUtils.DBread();
 
@@ -19,7 +23,7 @@ namespace ConsoleApplicationCrawler
 
             //DataBaseUtils.DBreadDescending();
 
-            DataBaseUtils.DBdelete();
+            //DataBaseUtils.DBdelete();
 
         }
 

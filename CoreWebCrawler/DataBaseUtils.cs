@@ -15,11 +15,12 @@ namespace CoreWebCrawler
 
             dbConnection.Open();
 
-            string sql = "create table trinkets (productName varchar(400), productPrice real, productDiscount varchar(60))";
+            string sql = "create table Trinkets (TrinketId int, ProductName varchar(400), ProductPrice real, ProductDiscount varchar(60))";
             SqliteCommand command = new SqliteCommand(sql, dbConnection);
             command.ExecuteNonQuery();
 
-            dbConnection.Close();
+            dbConnection.Dispose();
+            //dbConnection.Close();
         }
 
         public static void DBwrite(string productName, double productPrice, string productDiscount)
@@ -105,11 +106,29 @@ namespace CoreWebCrawler
             File.Delete("db.sqlite");
         }
 
-        public static void LinqTestQuery()
+        public static void LinquSeedQuery()
+        {
+            using(var db = new TrinketsCollectionContext())
+            {
+                db.Database.EnsureCreated();
+            }
+        }
+
+        public static void LinqWriteQuery(string productName, double productPrice, string productDiscount)
+        {
+            using(var db = new TrinketsCollectionContext())
+            {
+                db.Trinkets.Add(new Trinket {ProductName = productName, ProductPrice = productPrice, ProductDiscount = productDiscount});
+                db.SaveChanges();
+            }
+        }
+
+        public static void LinqReadQuery()
         {
             using (var db = new TrinketsCollectionContext())
             {
-                //db
+                foreach(var t in db.Trinkets)
+                    Console.WriteLine(string.Format("Name: {0, -230} Price: JPY {1, -15:N} Discount: {2, -15}", t.ProductName, t.ProductPrice, t.ProductDiscount));
             }
         }
     }
