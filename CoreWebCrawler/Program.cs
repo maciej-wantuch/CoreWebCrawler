@@ -10,9 +10,12 @@ namespace ConsoleApplicationCrawler
 
             Spider.GetContent();
 
-            DataBaseUtils.ReadFromDataBase();
+            //DataBaseUtils.ReadFromDataBase();
+
+            DataBaseUtils.ReadFromDataBaseFiltered();
 
             //DataBaseUtils.DBdelete();
+
 
         }
 

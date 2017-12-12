@@ -36,7 +36,9 @@ namespace CoreWebCrawler
         {
             using (var db = new TrinketsContext())
             {
-                var trinkets = db.Trinkets.Where(b => b.ProductName.Contains("Bunny")).ToList(); //TODO
+                var trinkets = db.Trinkets.Where(b => b.ProductName.Contains("Bunny"));
+                foreach(var t in trinkets)
+                    Console.WriteLine(string.Format("Name: {0, -230} Price: JPY {1, -15:N} Discount: {2, -15}", t.ProductName, t.ProductPrice, t.ProductDiscount));
             }
         }
 
