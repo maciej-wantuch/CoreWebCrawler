@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace CoreWebCrawler
 {
@@ -28,6 +29,14 @@ namespace CoreWebCrawler
             {
                 foreach (var t in db.Trinkets)
                     Console.WriteLine(string.Format("Name: {0, -230} Price: JPY {1, -15:N} Discount: {2, -15}", t.ProductName, t.ProductPrice, t.ProductDiscount));
+            }
+        }
+
+        public static void ReadFromDataBaseFiltered()
+        {
+            using (var db = new TrinketsContext())
+            {
+                var trinkets = db.Trinkets.Where(b => b.ProductName.Contains("Bunny")).ToList(); //TODO
             }
         }
 
