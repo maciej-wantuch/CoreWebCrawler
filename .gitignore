@@ -299,3 +299,4 @@ __pycache__/
 *.xsd.cs
 .DS_Store
 *.sqlite
+CoreWebCrawler/MailerConfig.xml
