@@ -10,7 +10,6 @@ namespace CoreWebCrawler
             var fromAddress = new MailAddress(MailerConfigurator.GetSenderAddress(), MailerConfigurator.GetSenderName());
             var toAddress = new MailAddress(MailerConfigurator.GetRecipientAddress(), MailerConfigurator.GetRecipientName());
             const string subject = "Trinkets List";
-            const string body = "Body";
 
             SmtpClient smtp = new SmtpClient
             {
@@ -24,7 +23,8 @@ namespace CoreWebCrawler
             using (var message = new MailMessage(fromAddress, toAddress)
             {
                 Subject = subject,
-                Body = body
+                IsBodyHtml = true,
+                Body = MailerBodyBuilder.BuildBody()
             })
             {
                 smtp.Send(message);
