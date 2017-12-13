@@ -14,11 +14,11 @@ namespace CoreWebCrawler
             }
         }
 
-        public static void WriteToDataBase(string productName, double productPrice, string productDiscount)
+        public static void WriteToDataBase(string productName, string productLink, double productPrice, string productDiscount)
         {
             using (var db = new TrinketsContext())
             {
-                db.Trinkets.Add(new Trinket { ProductName = productName, ProductPrice = productPrice, ProductDiscount = productDiscount });
+                db.Trinkets.Add(new Trinket { ProductName = productName, ProductLink = productLink, ProductPrice = productPrice, ProductDiscount = productDiscount });
                 db.SaveChanges();
             }
         }

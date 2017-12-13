@@ -25,12 +25,14 @@ namespace ConsoleApplicationCrawler
 
                 HtmlNodeCollection productCollection = doc.DocumentNode.SelectNodes("//td[contains(@class, 'product_box')]");
                 IEnumerable<HtmlNode> productNameCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//li[contains(@class, 'product_name')]"));
+                IEnumerable<HtmlNode> productLinkCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//li[contains(@class, 'product_name')]/a"));
                 IEnumerable<HtmlNode> productPriceCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//li[contains(@class, 'product_price')]/text()[contains(., 'JPY')]"));
                 IEnumerable<HtmlNode> productDiscountCollection = productCollection.Select(c1 => c1.SelectSingleNode(".//span[contains(@class, 'product_off')]"));
 
                 int productsCount = productCollection.Count;
 
                 string productName = string.Empty;
+                string productLink = string.Empty;
                 double productPrice;
                 string productDiscount = string.Empty;
 
@@ -38,10 +40,11 @@ namespace ConsoleApplicationCrawler
                 {
 
                     productName = productNameCollection.ElementAt(i) != null ? productNameCollection.ElementAt(i).InnerText : string.Empty;
+                    productLink = productLinkCollection.ElementAt(i) != null ? productLinkCollection.ElementAt(i).GetAttributeValue("href",string.Empty) : string.Empty;
                     productPrice = productPriceCollection.ElementAt(i) != null ? double.Parse(Regex.Replace(productPriceCollection.ElementAt(i).InnerText, @"\s|[^0-9,]", string.Empty)) : 0;
                     productDiscount = productDiscountCollection.ElementAt(i) != null ? productDiscountCollection.ElementAt(i).InnerText : string.Empty;
 
-                    DataBaseUtils.WriteToDataBase(productName, productPrice, productDiscount);
+                    DataBaseUtils.WriteToDataBase(productName, productLink, productPrice, productDiscount);
                 }
             }
 
